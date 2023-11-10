@@ -6,11 +6,14 @@ function RegisterPage() {
   async function register(ev) {
     ev.preventDefault();
     try {
-      const response = await fetch("https://blogie-app.onrender.com/register", {
-        method: "POST",
-        body: JSON.stringify({ username, password }),
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        "https://blogie-app-blogs.onrender.com/register",
+        {
+          method: "POST",
+          body: JSON.stringify({ username, password }),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       if (response.ok) {
         alert("Registration successful");

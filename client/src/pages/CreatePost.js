@@ -47,11 +47,14 @@ export default function CreatePost() {
     data.set("content", content);
     data.set("file", files[0]);
     ev.preventDefault();
-    const response = await fetch("https://blogie-app.onrender.com/post", {
-      method: "POST",
-      body: data,
-      credentials: "include",
-    });
+    const response = await fetch(
+      "hhttps://blogie-app-blogs.onrender.com/post",
+      {
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }
+    );
     if (response.ok) {
       setRedirect(true);
     } else {
