@@ -5,7 +5,7 @@ function IndexPage() {
   const { userInfo, setUserIndo } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:4001/post").then((response) => {
+    fetch("http://localhost:5000/post").then((response) => {
       response.json().then((posts) => {
         setPosts(posts);
       });
@@ -18,6 +18,7 @@ function IndexPage() {
   //   });
   //   setUserIndo(null);
   // }
+  //27.4.4.129/32
   return (
     <div className="post-page-main">
       {/* {userInfo && <button onClick={logout}>Log out</button>} */}

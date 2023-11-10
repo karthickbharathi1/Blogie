@@ -12,15 +12,23 @@ const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const uploadMiddleware = multer({ dest: "uploads/" });
 const fs = require("fs");
-
+require("dotenv").config();
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
-
-mongoose.connect(
-  "mongodb+srv://blog:NA7bbvjAAKDafsAZ@cluster0.k8q2qhj.mongodb.net/?retryWrites=true&w=majority"
-);
+console.log("Jacob");
+mongoose
+  .connect(
+    "mongodb+srv://blog:NA7bbvjAAKDafsAZ@cluster0.k8q2qhj.mongodb.net/?retryWrites=true&w=majority&ssl=true"
+  )
+  .then(async () => {
+    console.log("Connected to MongoDB");
+  })
+  .catch(async (e) => {
+    console.log("not connected");
+    console.log(e);
+  });
 
 app.post("/register", async (req, res) => {
   // res.json({ requestDara: { username, password } });
@@ -59,11 +67,13 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", (req, res) => {
   const { token } = req.cookies;
+  // const print1 =
   jwt.verify(token, secret, {}, (err, info) => {
     if (err) throw err;
     res.json(info);
   });
   res.json(req.cookies);
+  // console.log(print1);
 });
 
 app.post("/logout", (req, res) => {
@@ -108,7 +118,7 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
     if (err) throw err;
     const { id, title, summary, content } = req.body;
     const postDoc = await Post.findById(id);
-    console.log(postDoc);
+    // console.log(postDoc);
     const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
     if (!isAuthor) {
       return res.status(400).json("you are not the author");
@@ -130,6 +140,13 @@ app.get("/post", async (req, res) => {
       .populate("author", ["username"])
       .sort({ createdAt: -1 })
       .limit(20)
+    // .then((posts) => {
+    //   console.log(posts);
+    // })
+    // .catch((err) => {
+    //   console.error(`Error finding posts: ${err.message}`);
+    //   console.error(err.stack);
+    // })
   );
 });
 app.get("/post/:id", async (req, res) => {
@@ -138,7 +155,7 @@ app.get("/post/:id", async (req, res) => {
   res.json(postDoc);
 });
 
-const PORT = 4001;
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log("Serve running a tport 4000");
 });
