@@ -10,11 +10,13 @@ export default function PostPage() {
   const { userInfo } = useContext(UserContext);
   const { id } = useParams();
   useEffect(() => {
-    fetch(`http://localhost:5000/post/${id}`).then((response) => {
-      response.json().then((postInfo) => {
-        setPostInfo(postInfo);
-      });
-    });
+    fetch(`https://blogie-app-backend.onrender.com/post/${id}`).then(
+      (response) => {
+        response.json().then((postInfo) => {
+          setPostInfo(postInfo);
+        });
+      }
+    );
   }, []);
   // console.log(postInfo);
   if (!postInfo) {
@@ -54,7 +56,10 @@ export default function PostPage() {
         </div>
       )}
       <div className="image">
-        <img src={`http://localhost:5000/${postInfo.cover}`} alt="" />
+        <img
+          src={`https://blogie-app-backend.onrender.com/${postInfo.cover}`}
+          alt=""
+        />
       </div>
       <div
         className="content"
