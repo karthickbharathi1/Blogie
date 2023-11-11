@@ -29,6 +29,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
+app.options("*", cors());
 console.log("Jacob");
 mongoose
   .connect(
@@ -95,9 +96,9 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  // res.header("Access-Control-Allow-Headers", "Content-Type");
   const { originalname, path } = req.file;
   const parts = originalname.split(".");
   const ext = parts[parts.length - 1];
@@ -120,9 +121,9 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
 });
 
 app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  // res.header("Access-Control-Allow-Headers", "Content-Type");
   let newPath = null;
   if (req.file) {
     const { originalname, path } = req.file;
