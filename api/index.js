@@ -17,10 +17,12 @@ app.use(
   cors({
     credentials: true,
     origin:
-      // "https://blogie-front-end.onrender.com",
-      "https://blogie-back-end.onrender.com",
-    // ],
-    //
+      //       // "https://blogie-front-end.onrender.com",
+      //       // "https://blogie-back-end.onrender.com",
+      "http://localhost:3000",
+    // true,
+    //     // ],
+    //     //
   })
 );
 app.use(express.json());
@@ -77,13 +79,13 @@ app.post("/login", async (req, res) => {
 app.get("/profile", (req, res) => {
   const { token } = req.cookies;
   console.log("bye");
-  // const print1 = jwt.verify(token, secret, {}, (err, info) => {
-  //   if (err) throw err;
-  //   res.json(info);
-  // });
-  // res.json(req.cookies);
-  // console.log(cookies);
-  // console.log(print1);
+  const print1 = jwt.verify(token, secret, {}, (err, info) => {
+    if (err) throw err;
+    res.json(info);
+  });
+  res.json(req.cookies);
+  console.log(cookies);
+  console.log(print1);
 });
 
 app.post("/logout", (req, res) => {

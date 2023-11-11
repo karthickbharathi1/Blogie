@@ -11,10 +11,12 @@ export default function EditPost() {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    fetch("https://blogie-back-end.onrender.com/" + id).then((response) => {
+    fetch("http://localhost:5000/post/" + id).then((response) => {
       response.json().then((postInfo) => {
+        console.log(postInfo);
         setTitle(postInfo.title);
         setContent(postInfo.content);
+        setFiles(postInfo.cover);
         setSummary(postInfo.summary);
       });
     });
@@ -30,7 +32,7 @@ export default function EditPost() {
     if (files?.[0]) {
       data.set("file", files?.[0]);
     }
-    const response = await fetch("https://blogie-back-end.onrender.com/post", {
+    const response = await fetch("http://localhost:5000/post", {
       method: "PUT",
       body: data,
       credentials: "include",
@@ -41,7 +43,7 @@ export default function EditPost() {
   }
 
   if (redirect) {
-    return <Navigate to={"/post/" + id} />;
+    return <Navigate to={"/"} />;
   }
 
   return (
