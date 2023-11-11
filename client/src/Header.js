@@ -8,7 +8,7 @@ export default function Header() {
   const [redirect, setRedirect] = useState(false);
   const location = useLocation();
   useEffect(() => {
-    fetch("https://blogie-app-backend.onrender.com/profile", {
+    fetch("http://localhost:5000/profile", {
       credentials: "include",
     }).then((response) => {
       response.json().then((userInfo) => {

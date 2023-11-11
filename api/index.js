@@ -16,7 +16,7 @@ require("dotenv").config();
 app.use(
   cors({
     credentials: true,
-    origin: "https://blogie-app-blog-site.netlify.app",
+    origin: "http://localhost:3000/",
   })
 );
 app.use(express.json());
