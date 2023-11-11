@@ -16,10 +16,10 @@ require("dotenv").config();
 app.use(
   cors({
     credentials: true,
-    origin: [
-      "https://blogie-front-end.onrender.com",
+    origin:
+      // "https://blogie-front-end.onrender.com",
       "https://blogie-back-end.onrender.com",
-    ],
+    // ],
     //
   })
 );
