@@ -134,9 +134,14 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
     newPath = path + "." + ext;
     fs.renameSync(path, newPath);
   }
+  console.log("Hello1");
 
   const { token } = req.cookies;
-  console.log("Hello1");
+  console.log(req.cookies);
+  if (!token) {
+    return res.status(401).json({ error: "JWT must be provided" });
+  }
+
   jwt.verify(token, secret, {}, async (err, info) => {
     console.log("Hello2");
     if (err) {
