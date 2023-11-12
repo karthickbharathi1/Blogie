@@ -66,6 +66,9 @@ app.post("/login", async (req, res) => {
   const userDoc = await User.findOne({ username });
   console.log(userDoc);
   const passOk = bcrypt.compareSync(password, userDoc.password);
+  if (!userDoc) {
+    return res.status(404).json({ error: "User not found" });
+  }
   if (passOk) {
     // logged in
     jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
@@ -81,10 +84,18 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
-  const { token } = req.cookies;
   console.log("bye");
+  const { token } = req.cookies;
+  console.log(req.cookies);
+  if (!token) {
+    console.log("error");
+    return res.status(401).json({ error: "JWT must be provided" });
+  }
   const print1 = jwt.verify(token, secret, {}, (err, info) => {
-    if (err) throw err;
+    if (err) {
+      console.error(err);
+      return res.status(401).json({ error: "Invalid token" });
+    }
     res.json(info);
   });
   res.json(req.cookies);
