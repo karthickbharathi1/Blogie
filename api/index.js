@@ -136,11 +136,16 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
   }
 
   const { token } = req.cookies;
+  console.log("Hello1");
   jwt.verify(token, secret, {}, async (err, info) => {
-    if (err) throw err;
+    console.log("Hello2");
+    if (err) {
+      console.error(err); // Log the error for debugging purposes
+      return res.status(401).json({ error: "Invalid token" });
+    }
     const { id, title, summary, content } = req.body;
     const postDoc = await Post.findById(id);
-    // console.log(postDoc);
+    console.log(postDoc);
     const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
     if (!isAuthor) {
       return res.status(400).json("you are not the author");
