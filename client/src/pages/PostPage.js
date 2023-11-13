@@ -18,7 +18,7 @@ export default function PostPage() {
       }
     );
   }, []);
-  // console.log(postInfo);
+  console.log(postInfo);
   if (!postInfo) {
     console.log("get ");
 

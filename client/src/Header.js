@@ -10,12 +10,17 @@ export default function Header() {
   useEffect(() => {
     fetch("https://blogie-back-end.onrender.com/profile", {
       credentials: "include",
-    }).then((response) => {
-      response.json().then((userInfo) => {
-        setUserIndo(userInfo.username);
+    })
+      .then((response) => {
+        response.json().then((userInfo) => {
+          setUserIndo(userInfo.username);
+        });
+        console.log(userInfo.username);
+      })
+
+      .catch((error) => {
+        console.error("Fetch error:", error);
       });
-      console.log(userInfo.username);
-    });
   }, []);
 
   function logout() {
