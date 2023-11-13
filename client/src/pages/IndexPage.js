@@ -5,11 +5,16 @@ function IndexPage() {
   const { userInfo, setUserIndo } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch("https://blogie-back-end.onrender.com/post").then((response) => {
-      response.json().then((posts) => {
-        setPosts(posts);
+    fetch("https://blogie-back-end.onrender.com/post")
+      .then((response) => {
+        response.json().then((posts) => {
+          setPosts(posts);
+        });
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error("Fetch error:", error);
       });
-    });
   }, []);
   // function logout() {
   //   fetch("http://localhost:4000/logout", {
