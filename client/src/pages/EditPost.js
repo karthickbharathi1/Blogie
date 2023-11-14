@@ -11,7 +11,7 @@ export default function EditPost() {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    fetch(`https://blogie-front-end.onrender.com/post/${id}`)
+    fetch(`https://blogie-back-end.onrender.com/post/${id}`)
       .then((response) => response.json())
       .then((postInfo) => {
         console.log(postInfo);
@@ -40,7 +40,7 @@ export default function EditPost() {
 
     try {
       const response = await fetch(
-        `https://blogie-front-end.onrender.com/post`,
+        `https://blogie-back-end.onrender.com/post`,
         {
           method: "PUT",
           body: data,

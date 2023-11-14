@@ -10,7 +10,7 @@ export default function PostPage() {
   const { userInfo } = useContext(UserContext);
   const { id } = useParams();
   useEffect(() => {
-    fetch(`https://blogie-front-end.onrender.com/post/${id}`).then(
+    fetch(`https://blogie-back-end.onrender.com/post/${id}`).then(
       (response) => {
         response.json().then((postInfo) => {
           setPostInfo(postInfo);
@@ -73,7 +73,7 @@ export default function PostPage() {
       )}
       <div className="image">
         <img
-          src={`https://blogie-front-end.onrender.com/${postInfo.cover}`}
+          src={`https://blogie-back-end.onrender.com/${postInfo.cover}`}
           alt=""
         />
       </div>

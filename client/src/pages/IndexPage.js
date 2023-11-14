@@ -5,7 +5,7 @@ function IndexPage() {
   const { userInfo, setUserIndo } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch("https://blogie-front-end.onrender.com/post")
+    fetch("https://blogie-back-end.onrender.com/post")
       .then((response) => {
         response.json().then((posts) => {
           setPosts(posts);

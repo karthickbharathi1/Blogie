@@ -7,7 +7,7 @@ function RegisterPage() {
     ev.preventDefault();
     try {
       const response = await fetch(
-        "https://blogie-front-end.onrender.com/register",
+        "https://blogie-back-end.onrender.com/register",
         {
           method: "POST",
           body: JSON.stringify({ username, password }),
