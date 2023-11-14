@@ -20,10 +20,11 @@ app.use(
       "https://blogie-front-end.onrender.com",
       "https://blogie-back-end.onrender.com",
       "http://localhost:3000",
+      // true,
     ],
     methods: "GET, POST, PUT, DELETE",
     allowedHeaders: "Content-Type",
-    // true,
+
     //     // ],
     //     //
   })
@@ -64,7 +65,7 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const userDoc = await User.findOne({ username });
-  console.log(userDoc);
+  console.log(userDoc, "DOCCCC");
   const passOk = bcrypt.compareSync(password, userDoc.password);
   if (!userDoc) {
     return res.status(404).json({ error: "User not found" });
@@ -73,7 +74,7 @@ app.post("/login", async (req, res) => {
     // logged in
     jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
       if (err) throw err;
-      console.log(token);
+      console.log(token, "token");
       res.cookie("token", token).json({
         id: userDoc._id,
         username,
@@ -85,10 +86,9 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
-  console.log("bye");
   const { token } = req.cookies;
-  console.log(req.cookies);
-  if (!token) {
+  console.log(req.cookies, "COOKIEE");
+  if (!token || token == " ") {
     console.log("error");
     return res.status(401).json({ error: "JWT must be provided" });
   }
@@ -97,16 +97,15 @@ app.get("/profile", (req, res) => {
       console.error(err);
       return res.status(401).json({ error: "Invalid token" });
     }
-    res.json(info);
+    return res.status(200).json({ info, cookie: req.cookies });
   });
-  res.json(req.cookies);
-  console.log(cookies);
-  console.log(print1);
+  // console.log(print1, "fdlsfldsjfl");
+  // return res.json(req.cookies);
 });
 
 app.post("/logout", (req, res) => {
   console.log("hello");
-  res.cookie("token", "").json("ok");
+  return res.cookie("token", "").json("ok");
 });
 
 app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
@@ -149,7 +148,7 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
   console.log("Hello1");
 
   const { token } = req.cookies;
-  console.log(req.cookies);
+  console.log(req.cookies, "djflkdsjf");
   if (!token) {
     return res.status(401).json({ error: "JWT must be provided" });
   }
@@ -162,7 +161,7 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
     }
     const { id, title, summary, content } = req.body;
     const postDoc = await Post.findById(id);
-    console.log(postDoc);
+    console.log(postDoc, "roejreij");
     const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
     if (!isAuthor) {
       return res.status(400).json("you are not the author");
@@ -196,7 +195,7 @@ app.get("/post", async (req, res) => {
 app.get("/post/:id", async (req, res) => {
   const { id } = req.params;
   const postDoc = await Post.findById(id).populate("author", ["username"]);
-  res.json(postDoc);
+  return res.json(postDoc);
 });
 
 const PORT = 5000;

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, Navigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 
 export default function Header() {
@@ -8,12 +8,12 @@ export default function Header() {
   const [redirect, setRedirect] = useState(false);
   const location = useLocation();
   useEffect(() => {
-    fetch("https://blogie-back-end.onrender.com/profile", {
+    fetch("https://blogie-front-end.onrender.com/profile", {
       credentials: "include",
     })
       .then((response) => {
         response.json().then((userInfo) => {
-          setUserIndo(userInfo.username);
+          setUserIndo(userInfo);
         });
         console.log(userInfo.username);
       })
@@ -24,7 +24,7 @@ export default function Header() {
   }, []);
 
   function logout() {
-    fetch("https://blogie-back-end.onrender.com/logout", {
+    fetch("https://blogie-front-end.onrender.com/logout", {
       credentials: "include",
       method: "POST",
     });
@@ -32,11 +32,14 @@ export default function Header() {
 
     // if (response.ok) {
     console.log("karthick");
-    // setRedirect(true);
+    setRedirect(true);
 
-    setUserIndo(null);
+    setUserIndo(undefined);
   }
-  // if (redirect) {
+  if (redirect) {
+    setRedirect(false);
+    return <Navigate to={"/login"} />;
+  }
   //   return (
   //     <div>
   //       <header>
@@ -58,9 +61,11 @@ export default function Header() {
   return (
     <div class="head">
       <header>
-        <a class="logo" href="#">
-          BLOGIE
-        </a>
+        <Link to="/">
+          <a class="logo" href="#">
+            BLOGIE
+          </a>
+        </Link>
         <nav>
           {isRootPath && username ? (
             <>

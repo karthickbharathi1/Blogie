@@ -9,13 +9,16 @@ function LoginPage() {
   const { setUserIndo } = useContext(UserContext);
   async function login(ev) {
     ev.preventDefault();
-    const response = await fetch("https://blogie-back-end.onrender.com/login", {
-      method: "POST",
+    const response = await fetch(
+      "https://blogie-front-end.onrender.com/login",
+      {
+        method: "POST",
 
-      body: JSON.stringify({ username, password }),
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
+        body: JSON.stringify({ username, password }),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }
+    );
     if (response.ok) {
       response.json().then((userInfo) => {
         setUserIndo(userInfo);

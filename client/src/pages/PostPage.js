@@ -10,7 +10,7 @@ export default function PostPage() {
   const { userInfo } = useContext(UserContext);
   const { id } = useParams();
   useEffect(() => {
-    fetch(`https://blogie-back-end.onrender.com/post/${id}`).then(
+    fetch(`https://blogie-front-end.onrender.com/post/${id}`).then(
       (response) => {
         response.json().then((postInfo) => {
           setPostInfo(postInfo);
@@ -24,16 +24,32 @@ export default function PostPage() {
 
     return "";
   }
+  // useEffect(() => {
+
+  //   userInfo?.id == null || userInfo?.id === undefined
+  //   ? console.log("not logged in", userInfo?.id)
+  //   : console.log("logged in");
+  // }, [userInfo])
 
   return (
     <div className="post-page">
       <h1>{postInfo.title}</h1>
       <time>{format(new Date(postInfo.createdAt), "MMM d, yyyy HH:mm")}</time>
+      {console.log(
+        "userInfo.id",
+        userInfo,
+        "postInfo.author._id",
+        postInfo.author._id
+      )}
+
+      {console.log("postInfo.author.username", postInfo.author.username)}
+
       <div className="author">by @{postInfo.author.username}</div>
       {/* {console.log("test")}
       {console.log(userInfo.id)}
       {console.log(postInfo)}
       {userInfo.id} */}
+
       {userInfo.id === postInfo.author._id && (
         <div className="edit-row">
           <Link className="edit-btn" to={`/edit/${postInfo._id}`}>
@@ -57,7 +73,7 @@ export default function PostPage() {
       )}
       <div className="image">
         <img
-          src={`https://blogie-back-end.onrender.com/${postInfo.cover}`}
+          src={`https://blogie-front-end.onrender.com/${postInfo.cover}`}
           alt=""
         />
       </div>
