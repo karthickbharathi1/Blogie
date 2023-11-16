@@ -13,7 +13,6 @@ const multer = require("multer");
 const uploadMiddleware = multer({ dest: "uploads/" });
 const fs = require("fs");
 require("dotenv").config();
-
 app.use(
   cors({
     credentials: true,

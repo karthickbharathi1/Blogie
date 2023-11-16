@@ -5,6 +5,7 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   async function register(ev) {
     ev.preventDefault();
+
     try {
       const response = await fetch(
         "https://blogie-back-end.onrender.com/register",
