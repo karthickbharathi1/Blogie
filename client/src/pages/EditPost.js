@@ -11,7 +11,7 @@ export default function EditPost() {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/post/${id}`)
+    fetch(`https://blogie-back-end.onrender.com/post/${id}`)
       .then((response) => response.json())
       .then((postInfo) => {
         console.log(postInfo);
@@ -39,11 +39,14 @@ export default function EditPost() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/post`, {
-        method: "PUT",
-        body: data,
-        credentials: "include",
-      });
+      const response = await fetch(
+        `https://blogie-back-end.onrender.com/post`,
+        {
+          method: "PUT",
+          body: data,
+          credentials: "include",
+        }
+      );
 
       if (response.ok) {
         setRedirect(true);

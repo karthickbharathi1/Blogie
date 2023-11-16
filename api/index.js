@@ -17,10 +17,10 @@ app.use(
   cors({
     credentials: true,
     origin: [
-      // "https://blogie-front-end.onrender.com",
-      // "https://blogie-back-end.onrender.com",
-      // "http://localhost:3000",
-      true,
+      "https://blogie-front-end.onrender.com",
+      "https://blogie-back-end.onrender.com",
+      "http://localhost:3000",
+      // true,
     ],
     methods: "GET, POST, PUT, DELETE",
     allowedHeaders: "Content-Type",

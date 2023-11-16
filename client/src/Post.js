@@ -7,7 +7,7 @@ function Post({ _id, title, summary, cover, createdAt, author }) {
       <div className="post">
         <Link to={`/post/${_id}`}>
           <div className="image">
-            <img src={"http://localhost:5000/" + cover} alt="" />
+            <img src={"https://blogie-back-end.onrender.com/" + cover} alt="" />
           </div>
         </Link>
 
