@@ -9,18 +9,22 @@ function LoginPage() {
   const { setUserIndo } = useContext(UserContext);
   async function login(ev) {
     ev.preventDefault();
-    const response = await fetch("https://blogie-back-end.onrender.com/login", {
+    const response = await fetch("http://localhost:5000/login", {
       method: "POST",
 
       body: JSON.stringify({ username, password }),
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     });
+    // console.log("responseeee - - ", response);
+
     if (response.ok) {
       response.json().then((userInfo) => {
         setUserIndo(userInfo);
         setRedirect(true);
       });
+    } else if (response.status === 404) {
+      alert("user name incorrect");
     } else {
       alert("Wrong credentials");
     }

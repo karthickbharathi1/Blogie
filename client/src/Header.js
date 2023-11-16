@@ -8,7 +8,7 @@ export default function Header() {
   const [redirect, setRedirect] = useState(false);
   const location = useLocation();
   useEffect(() => {
-    fetch("https://blogie-back-end.onrender.com/profile", {
+    fetch("http://localhost:5000/profile", {
       credentials: "include",
     })
       .then((response) => {
@@ -24,7 +24,7 @@ export default function Header() {
   }, []);
 
   function logout() {
-    fetch("https://blogie-back-end.onrender.com/logout", {
+    fetch("http://localhost:5000/logout", {
       credentials: "include",
       method: "POST",
     });

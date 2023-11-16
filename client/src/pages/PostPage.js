@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { format } from "date-fns";
 import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
@@ -9,14 +10,13 @@ export default function PostPage() {
   const [postInfo, setPostInfo] = useState(null);
   const { userInfo } = useContext(UserContext);
   const { id } = useParams();
+
   useEffect(() => {
-    fetch(`https://blogie-back-end.onrender.com/post/${id}`).then(
-      (response) => {
-        response.json().then((postInfo) => {
-          setPostInfo(postInfo);
-        });
-      }
-    );
+    fetch(`http://localhost:5000/post/${id}`).then((response) => {
+      response.json().then((postInfo) => {
+        setPostInfo(postInfo);
+      });
+    });
   }, []);
   console.log(postInfo);
   if (!postInfo) {
@@ -24,12 +24,10 @@ export default function PostPage() {
 
     return "";
   }
-  // useEffect(() => {
-
-  //   userInfo?.id == null || userInfo?.id === undefined
-  //   ? console.log("not logged in", userInfo?.id)
-  //   : console.log("logged in");
-  // }, [userInfo])
+  if (userInfo === undefined && userInfo?.id === undefined) {
+    console.log("trying to navigate");
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div className="post-page">
@@ -72,10 +70,7 @@ export default function PostPage() {
         </div>
       )}
       <div className="image">
-        <img
-          src={`https://blogie-back-end.onrender.com/${postInfo.cover}`}
-          alt=""
-        />
+        <img src={`http://localhost:5000/${postInfo.cover}`} alt="" />
       </div>
       <div
         className="content"

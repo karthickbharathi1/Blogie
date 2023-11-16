@@ -17,10 +17,10 @@ app.use(
   cors({
     credentials: true,
     origin: [
-      "https://blogie-front-end.onrender.com",
-      "https://blogie-back-end.onrender.com",
-      "http://localhost:3000",
-      // true,
+      // "https://blogie-front-end.onrender.com",
+      // "https://blogie-back-end.onrender.com",
+      // "http://localhost:3000",
+      true,
     ],
     methods: "GET, POST, PUT, DELETE",
     allowedHeaders: "Content-Type",
@@ -66,22 +66,24 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const userDoc = await User.findOne({ username });
   console.log(userDoc, "DOCCCC");
-  const passOk = bcrypt.compareSync(password, userDoc.password);
   if (!userDoc) {
+    console.log("user not found");
     return res.status(404).json({ error: "User not found" });
   }
+  const passOk = bcrypt.compareSync(password, userDoc.password);
+
   if (passOk) {
     // logged in
     jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
       if (err) throw err;
       console.log(token, "token");
-      res.cookie("token", token).json({
+      return res.cookie("token", token).json({
         id: userDoc._id,
         username,
       });
     });
   } else {
-    res.status(400).json("wrong credentials");
+    return res.status(400).json("wrong credentials");
   }
 });
 
